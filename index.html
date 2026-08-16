@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Convesio D1 test</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 44rem; margin: 4rem auto; padding: 0 1rem; }
+      pre { background: #111827; color: #e5e7eb; border-radius: .5rem; padding: 1rem; overflow: auto; }
+      .pending { color: #92400e; }
+      .success { color: #166534; }
+      .error { color: #b91c1c; }
+    </style>
+  </head>
+  <body>
+    <h1>Convesio D1 test</h1>
+    <p id="status" class="pending">Testing the <code>DB</code> binding…</p>
+    <pre id="result" aria-live="polite"></pre>
+    <script>
+      const status = document.querySelector('#status');
+      const result = document.querySelector('#result');
+      fetch('/api/d1', { method: 'POST' })
+        .then(async (response) => ({ ok: response.ok, body: await response.json() }))
+        .then(({ ok, body }) => {
+          status.textContent = ok ? 'D1 read/write succeeded.' : 'D1 request failed.';
+          status.className = ok ? 'success' : 'error';
+          result.textContent = JSON.stringify(body, null, 2);
+        })
+        .catch((error) => {
+          status.textContent = 'D1 request failed.';
+          status.className = 'error';
+          result.textContent = String(error);
+        });
+    </script>
+  </body>
+</html>
