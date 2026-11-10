@@ -1,0 +1,7 @@
+name = "ddefino2-convesio-d1-static-test"
+main = "functions/api/d1.js"
+compatibility_date = "2024-09-23"
+
+[assets]
+directory = "."
+binding = "ASSETS"
